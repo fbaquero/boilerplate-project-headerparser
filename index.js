@@ -25,6 +25,31 @@ app.get('/api/hello', function (req, res) {
 });
 
 
+/**
+ * Según los requisitos, se obtiene la IP del usuario, el idioma preferido del usuario y el software de usuario.
+ * URL de consulta: [base url]/api/whoami
+ * Se devuelve la IP, el idioma y el software del usuario en formato:
+ * {
+ *  "ipaddress":"::ffff:159.20.14.100",
+ *  "language":"en-US,en;q=0.5",
+ *  "software":"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:50.0) Gecko/20100101 Firefox/50.0"}
+ * 
+ */
+app.get('/api/whoami', function (req, res) {
+  // Obtener la IP del usuario
+  const ip = req.ip;
+
+  // Obtener el idioma preferido del usuario desde las cabeceras de la petición
+  const language = req.headers['accept-language'];
+
+  // Obtener el software de usuario
+  const software = req.headers['user-agent'];
+
+  // Devolver la IP, el idioma y el software del usuario
+  res.json({ ipaddress: ip, language: language, software: software });
+
+})
+
 
 // listen for requests :)
 var listener = app.listen(process.env.PORT || 3000, function () {
